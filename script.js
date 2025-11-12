@@ -74,9 +74,9 @@ modalElement.addEventListener('show.bs.modal', function (event) {
         
         // adiciona campos especificos por categoria
         // if (item.categoria === 'Livros') {
-        detailsHTML += '<p><strong>Autor:</strong> $(item.autor)</p>';
-        detailsHTML += '<p>strong>Lancamento:</strong> $(item.lancamento)</p>';
-        detailsHTML += '<p class="text-info"><strong>Estoque Disponivel:</strong> $(item.estoque) unidades</p>';
+        detailsHTML += `<p><strong>Autor:</strong> ${item.autor}</p>`;
+        detailsHTML += `<p><strong>Lançamento:</strong> ${item.lancamento}</p>`;
+        detailsHTML += `<p class="text-info"><strong>Estoque Disponivel:</strong> ${item.estoque} unidades</p>`;
         // }
         
         modalBody.innerHTML = detailsHTML;
@@ -94,17 +94,50 @@ const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const items = document.querySelectorAll('.item-catalogo');
 
-fuction executarPesquisa(event) {
-
+function executarPesquisa(event) {
+    
+    event.preventDefault();
+    const query = searchInput.value.toLowerCase().trim();
+    items.forEach(item => {
+        const title = item.querySelector('.card-title').textContent.toLowerCase();
+        const category = item.getAttribute('data-categorias').toLowerCase();
+        
+        if (title.includes(query) || category.includes(query) || query === "") {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
 }
 
 searchButton.addEventListener('click', executarPesquisa);
-searchInput.addEventListener('keyup', (event) =>) {
+searchInput.addEventListener('keyup', (event) => {
+    
+    if (event.key === 'Enter') {
+        executarPesquisa(event);
+    } else if (searchInput.value.trim() === "") {
+        
+        executarPesquisa(event);
+    }
+});
 
-if (event.key === 'Enter') {
-    executarPesquisa(event);
-} else if (searchInput.ariaValueMax.trim() === "") {
+items.forEach((card, index) => {
+    const img = card.querySelector('img');
+    const title = card.querySelector('.card-title');
+    const category = card.querySelectorAll('.card-text')[0];
+    const description = card.querySelectorAll('.card-text')[1];
 
-    executarPesquisa(event);
-  }
-}
+    const item = CATALOG_ITEMS.find(i => i.id === (index + 1));
+
+    if (item) {
+        img.src = img.src.replace(/\?text=(.*)/, "?text=" + item.categoria[0].toUpperCase());
+
+        title.textContent = item.titulo;
+
+        category.textContent = "categoria: " + item.categoria.join(", ");
+
+        description.textContent = item.detalhes;
+    }
+});
+
+
