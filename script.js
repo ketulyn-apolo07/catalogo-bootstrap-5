@@ -82,6 +82,7 @@ modalElement.addEventListener('show.bs.modal', function (event) {
         modalBody.innerHTML = detailsHTML;
         
         modalAction.onclick = () => {
+            adicionarItemCarrinho(item.id);
             console.log(`Ação: Item '$(item.titulo)' (ID: ${item.id}) adicionado ao carrinho.`);
             const bsModal = bootstrap.Modal.getInstance(modalElement);
             if(bsModal) bsModal.hide();
@@ -163,11 +164,26 @@ function salvarCookieCarrinho(itensCarrinho) {
         console.error("ERRO: Falha ao salvar carrinho no navegador. Erro: ", e);
     }
 }
+ function atualizaContadorCarrinho() {
+    const carrinho = obterCarrinhoNavegador();
+    const carrinhoBadge = document.getElementById("cart-count");
+
+    if (carrinhoBadge) {
+        carrinhoBadge.textContent = carrinho.length;
+
+        if (carrinho.length > 0 ) {
+            carrinhoBadge.classList.remove('d-none');
+        } else {
+            carrinhoBadge.classList.add('d-none');
+        }
+    }
+ }
 
 function adicionarItemCarrinho(itemId) {
     const carrinho = obterCarrinhoNavegador();
     carrinho.push(itemId);
-    salvarCookieCarrinho();
+    salvarCookieCarrinho(carrinho);
     atualizaContadorCarrinho();
 }
+atualizaContadorCarrinho();
 

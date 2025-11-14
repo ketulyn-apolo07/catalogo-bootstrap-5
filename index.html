@@ -20,7 +20,7 @@
             </button>
             
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item active">
                         <a class="nav-link active" href="#">Início</a>
                     </li>
@@ -46,10 +46,21 @@
                         <a class="nav-link disabled" href="#">Desabilitado</a>
                     </li>
                 </ul>
-                <form class="d-flex form-inline my-2 my-lg-0 ms-auto">
-                    <input id="search-input" class="form-control me-2" type="search" placeholder="Buscar Item" aria-label="Buscar">
-                    <button id="search-button" class="btn btn-outline-warning my-2 my-sm-0" type="submit">Buscar</button>
-                </form>
+                
+                <div class="d-flex align-tems-center">
+                    
+                    <button class="btn btn-outline-light me-4 position-relative" id="cart-button" title="Ver Carrinho">
+                        <i class="bi bi-cart4 fs-5"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="cart-count">
+                            0
+                            <span class="visually-hiden">itens no carrinho</span>
+                        </span>
+                    </button>
+                    <form class="d-flex" role="search">
+                        <input id="search-input" class="form-control me-2" type="search" placeholder="Buscar Item" aria-label="Buscar">
+                        <button id="search-button" class="btn btn-outline-light" type="submit">Buscar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </nav>
@@ -145,7 +156,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-success"><i class="bi bi-cart-plus"></i> Adicionar á Lista</button>
+                    <button type="button" class="btn btn-success"><i class="bi bi-cart-plus"></i> Adicionar ao carrinho</button>
                 </div>
             </div>
         </div>
